@@ -1,0 +1,79 @@
+<section class="box-git-user">
+    
+    <div class="box-git-user-data">
+        <ul>
+            <li class="box-git-user-data-item">
+                <a [href]="userListData.html_url" target="_blank">
+                    <img [src]="userListData.avatar_url">
+                </a>
+            </li>
+            <li class="box-git-user-data-item">
+                <a [href]="userListData.html_url" target="_blank">
+                    <h1 class="style-titulo">{{userListData.name}}</h1>
+                </a>
+            </li>
+            <li class="box-git-user-data-item box-git-user-data-shearch">
+
+				<form #formSearch="ngForm" novalidate (submit)="findUserData(profileName.value); false;">
+	                <label for="profile" class="style-subtitulo">Buscar por Profile Name:</label>
+	                <input 
+                        name="profile" 
+                        type="text" 
+	                    #profileName ="ngModel"
+                        (ngModel) = "searchProfile"
+	                    placeholder="ex: cumpadiwashington" 
+                        required />
+	                <button class="btn btn-success" [disabled]="formSearch.form.invalid">
+	                    Buscar
+	                </button>
+				</form>
+
+            </li>
+            <li>
+                <!-- <alert-box tipo="info" msg="{{gitUserCtrl.userListData.message}}" mostrar="gitUserCtrl.userListData.message != null "></alert-box> -->
+            </li>
+        </ul>
+    </div><!-- Fim .box-git-user-data -->
+
+    <div class="box-git-user-repo">
+        
+        <div class="box-git-user-repo-titulo">
+            <h1 class="style-titulo"> Repositórios: </h1>
+            <input class="box-git-user-repo-search" type="text"
+                    [(ngModel)] = "searchRepositorio"
+                    placeholder="Buscar por repositório específico" />
+        </div><!-- Fim .box-git-user-repo-titulo -->
+
+        <div class="box-git-user-repo-item" *ngFor="let item of userListRepo | filterBy: searchRepositorio">
+            
+            <div class="box-git-user-repo-item-data">
+                <ul>
+                    <li>
+                        <h3 class="style-titulo">
+                            <a [href]="item.html_url" target="_blank">
+                                {{item.name}}
+                            </a>
+                        </h3>
+                    </li>
+                    <li>
+                        <i ng-if=" item.language != null " class="box-git-user-repo-item-icon fa fa-info-circle fa-lg" aria-hidden="true"></i>
+                        <span>{{item.language}}</span>
+
+                        <i class="box-git-user-repo-item-icon fa fa-star fa-lg" aria-hidden="true"></i>
+                        <span>{{item.stargazers_count}}</span>
+
+                        <i class="box-git-user-repo-item-icon fa fa-code-fork fa-lg" aria-hidden="true"></i>
+                        <span>{{item.forks_count}}</span>
+
+                        <i class="box-git-user-repo-item-icon fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+                        <span>{{item.owner.login}}</span>
+                    </li>
+                </ul>
+            </div><!-- Fim .box-git-user-repo-item-data -->
+        
+        </div><!-- Fim .box-git-user-repo-item -->
+
+    </div><!-- Fim .box-git-user-repo -->
+
+</section><!-- Fim .box-git-user -->
+        
